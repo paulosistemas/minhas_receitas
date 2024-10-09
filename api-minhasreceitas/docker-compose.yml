@@ -1,0 +1,25 @@
+version: "1"
+services:
+  postgres:
+    image: 'postgres:latest'
+    container_name: minhasreceitas-database-container
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=minhasreceitas
+    ports:
+      - "5455:5432"
+    volumes:
+        - ./minhasreceitas-db-data:/var/lib/postgresql/data
+  pgadmin:
+    image: 'dpage/pgadmin4'
+    container_name: pgadmin4-container
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5040:80"
+    depends_on:
+      - postgres
