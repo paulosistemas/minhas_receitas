@@ -1,7 +1,7 @@
 version: "1"
 services:
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:16'
     container_name: minhasreceitas-database-container
     restart: always
     environment:

@@ -1,15 +1,23 @@
 package br.com.minhasreceitas.apiminhasreceitas.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "ingredient")
-@Data
+@Getter
+@Setter
 public class Ingredient {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "amount", length = 100)
+    private String amount;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -19,7 +27,6 @@ public class Ingredient {
     @JoinColumn(name = "unit_id")
     private Unit unit;
 
-    @Column(name = "amount", length = 100)
-    private String amount;
-
+    @ManyToMany(mappedBy = "ingredients")
+    private List<Recipe> recipes;
 }
