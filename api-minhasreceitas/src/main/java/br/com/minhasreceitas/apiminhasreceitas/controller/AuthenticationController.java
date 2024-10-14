@@ -3,7 +3,6 @@ package br.com.minhasreceitas.apiminhasreceitas.controller;
 import br.com.minhasreceitas.apiminhasreceitas.config.TokenService;
 import br.com.minhasreceitas.apiminhasreceitas.dto.AuthenticationDTO;
 import br.com.minhasreceitas.apiminhasreceitas.dto.LoginResponseDTO;
-import br.com.minhasreceitas.apiminhasreceitas.dto.RegisterDTO;
 import br.com.minhasreceitas.apiminhasreceitas.model.User;
 
 import br.com.minhasreceitas.apiminhasreceitas.service.UserService;
@@ -40,13 +39,5 @@ public class AuthenticationController {
         var token = tokenService.generateToken((User) auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
-        if(userService.register(data) == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok().build();
     }
 }

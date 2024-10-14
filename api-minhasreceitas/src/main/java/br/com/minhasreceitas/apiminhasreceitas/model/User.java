@@ -2,6 +2,7 @@ package br.com.minhasreceitas.apiminhasreceitas.model;
 
 import br.com.minhasreceitas.apiminhasreceitas.enums.UserRole;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,6 +25,7 @@ public class User implements UserDetails {
     private String name;
 
     @Column(name = "email", unique = true, length = 100, nullable = false)
+    @Email
     private String email;
 
     @Column(name = "password", length = 100, nullable = false)
@@ -44,6 +46,10 @@ public class User implements UserDetails {
 
     public User(String name, String email) {
         this.name = name;
+        this.email = email;
+    }
+
+    public User(String email) {
         this.email = email;
     }
 
