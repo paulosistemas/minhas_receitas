@@ -24,24 +24,24 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDetailsDTO> getUser(@PathVariable @Valid Integer id) {
-        UserDetailsDTO userDetailsDTO = modelMapper.map(userService.findById(id), UserDetailsDTO.class);
+        UserDetailsDTO userDetailsDTO = modelMapper.map(userService.getOne(id), UserDetailsDTO.class);
         return ResponseEntity.ok(userDetailsDTO);
     }
 
     @PutMapping("edit/{id}")
     public ResponseEntity<UserDetailsDTO> editUser(@PathVariable @Valid Integer id, @RequestBody @Valid UserDetailsDTO userDetailsDTO) {
-        User user = userService.editUser(modelMapper.map(userDetailsDTO, User.class), id);
+        User user = userService.update(modelMapper.map(userDetailsDTO, User.class), id);
         return ResponseEntity.ok(modelMapper.map(user, UserDetailsDTO.class));
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity changePassword(@RequestBody @Valid UserChangePasswordDTO userChangePasswordDTO) {
+    public ResponseEntity<Void> changePassword(@RequestBody @Valid UserChangePasswordDTO userChangePasswordDTO) {
         userService.changePassword(userChangePasswordDTO);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+    public ResponseEntity<Void> register(@RequestBody @Valid RegisterDTO data) {
         if(userService.register(data) == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @PostMapping("/recover-password")
-    public ResponseEntity recoverPassword(@RequestBody @Valid UserRecoverDTO userRecoverDTO) {
+    public ResponseEntity<Void> recoverPassword(@RequestBody @Valid UserRecoverDTO userRecoverDTO) {
         userService.recoverPassword(userRecoverDTO.email());
         return ResponseEntity.ok().build();
     }

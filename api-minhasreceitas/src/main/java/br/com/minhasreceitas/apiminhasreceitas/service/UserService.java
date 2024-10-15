@@ -2,6 +2,9 @@ package br.com.minhasreceitas.apiminhasreceitas.service;
 
 import br.com.minhasreceitas.apiminhasreceitas.dto.RegisterDTO;
 import br.com.minhasreceitas.apiminhasreceitas.dto.UserChangePasswordDTO;
+import br.com.minhasreceitas.apiminhasreceitas.exception.AccessDeniedException;
+import br.com.minhasreceitas.apiminhasreceitas.exception.NotFoundException;
+import br.com.minhasreceitas.apiminhasreceitas.exception.PasswordNotMatchException;
 import br.com.minhasreceitas.apiminhasreceitas.model.User;
 import br.com.minhasreceitas.apiminhasreceitas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +46,14 @@ public class UserService {
     private void validateUser(Integer id) {
         User userLogged = getLoggedUser();
         if(!userLogged.getId().equals(id)){
-            throw new RuntimeException("Acesso negado.");
+            throw new AccessDeniedException("Acesso negado.");
         }
     }
 
-    public User findById(Integer id) {
+    public User getOne(Integer id) {
         validateUser(id);
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found") );
+                .orElseThrow(() -> new NotFoundException("Usuário não encontrado") );
     }
 
     public User getLoggedUser() {
@@ -58,9 +61,9 @@ public class UserService {
         return (User) userRepository.findByEmail(emailLoggedUser);
     }
 
-    public User editUser(User newUser, Integer id) {
+    public User update(User newUser, Integer id) {
         validateUser(id);
-        User oldUser = findById(id);
+        User oldUser = getOne(id);
         oldUser.setName(newUser.getName());
         oldUser.setEmail(newUser.getEmail());
         return userRepository.save(oldUser);
@@ -72,7 +75,7 @@ public class UserService {
         if(!passwordEncoder.matches(
                 userChangePasswordDTO.getCurrentPassword(),
                 userLogged.getPassword())) {
-            throw new RuntimeException("Senha antiga incorreta");
+            throw new PasswordNotMatchException("Senha antiga incorreta");
         }
         userLogged.setPassword(passwordEncoder.encode(userChangePasswordDTO.getNewPassword()));
         userRepository.save(userLogged);
@@ -80,7 +83,7 @@ public class UserService {
 
     public void recoverPassword(String email) {
         if(!userRepository.existsByEmail(email)){
-            throw new RuntimeException("Email não cadastrado");
+            throw new NotFoundException("Email não cadastrado");
         }
         generateNewPasswordAndSendEmail(email);
     }

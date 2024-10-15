@@ -1,6 +1,14 @@
+------------------------------- CREATE SEQUENCES -----------------------------------
+CREATE SEQUENCE user_account_id_seq
+    INCREMENT 1
+    START 5
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
 -------------------------------- CREATING TABLES -----------------------------------
 CREATE TABLE user_account(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER PRIMARY KEY DEFAULT nextval('user_account_id_seq'),
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
@@ -9,22 +17,22 @@ CREATE TABLE user_account(
 );
 
 CREATE TABLE category(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE unit(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     type VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE product(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE ingredient(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     product_id INTEGER NOT NULL,
     unit_id INTEGER NOT NULL,
     amount VARCHAR(100),
@@ -33,7 +41,7 @@ CREATE TABLE ingredient(
 );
 
 CREATE TABLE recipe(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     hint VARCHAR(200),
     image VARCHAR(1000),
@@ -45,8 +53,8 @@ CREATE TABLE recipe(
 );
 
 CREATE TABLE recipe_ingredient(
-    recipe_id INTEGER NOT NULL,
-    ingredient_id INTEGER NOT NULL,
+    recipe_id SERIAL,
+    ingredient_id SERIAL,
     PRIMARY KEY (recipe_id, ingredient_id),
     CONSTRAINT recipe_ingredient_recipe_FK FOREIGN KEY (recipe_id) REFERENCES recipe (id),
     CONSTRAINT recipe_ingredient_ingredient_FK FOREIGN KEY (ingredient_id) REFERENCES ingredient (id)
