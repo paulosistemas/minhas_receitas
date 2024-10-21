@@ -28,16 +28,9 @@ CREATE TABLE unit(
 
 CREATE TABLE product(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE ingredient(
-    id SERIAL PRIMARY KEY,
-    product_id INTEGER NOT NULL,
-    unit_id INTEGER NOT NULL,
-    amount VARCHAR(100),
-    CONSTRAINT product_id_FK FOREIGN KEY (product_id) REFERENCES product (id),
-    CONSTRAINT unit_id_FK FOREIGN KEY (unit_id) REFERENCES unit (id)
+    name VARCHAR(100) NOT NULL,
+    user_id INTEGER NOT NULL,
+    CONSTRAINT user_id_FK FOREIGN KEY (user_id) REFERENCES user_account (id)
 );
 
 CREATE TABLE recipe(
@@ -52,13 +45,15 @@ CREATE TABLE recipe(
     CONSTRAINT category_id_FK FOREIGN KEY (category_id) REFERENCES category (id)
 );
 
-CREATE TABLE recipe_ingredient(
-    recipe_id SERIAL,
-    ingredient_id SERIAL,
-    PRIMARY KEY (recipe_id, ingredient_id),
-    CONSTRAINT recipe_ingredient_recipe_FK FOREIGN KEY (recipe_id) REFERENCES recipe (id),
-    CONSTRAINT recipe_ingredient_ingredient_FK FOREIGN KEY (ingredient_id) REFERENCES ingredient (id)
-
+CREATE TABLE ingredient(
+   id SERIAL PRIMARY KEY,
+   recipe_id INTEGER,
+   product_id INTEGER NOT NULL,
+   unit_id INTEGER,
+   amount VARCHAR(100),
+   CONSTRAINT recipe_id_FK FOREIGN KEY (recipe_id) REFERENCES recipe (id),
+   CONSTRAINT product_id_FK FOREIGN KEY (product_id) REFERENCES product (id),
+   CONSTRAINT unit_id_FK FOREIGN KEY (unit_id) REFERENCES unit (id)
 );
 
 --------------------------------- INSERT VALUES ------------------------------------

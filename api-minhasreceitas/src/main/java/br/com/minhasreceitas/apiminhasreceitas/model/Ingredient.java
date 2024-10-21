@@ -4,12 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
-@Entity
-@Table(name = "ingredient")
 @Getter
 @Setter
+@Entity
+@Table(name = "ingredient")
 public class Ingredient {
 
     @Id
@@ -26,7 +24,4 @@ public class Ingredient {
     @ManyToOne
     @JoinColumn(name = "unit_id")
     private Unit unit;
-
-    @ManyToMany(mappedBy = "ingredients")
-    private List<Recipe> recipes;
 }

@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
+@Entity
 @Table(name = "product")
 public class Product {
 
@@ -14,7 +14,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name", length = 100, nullable = false)
+    @Column(name = "name", length = 100, unique = true, nullable = false)
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

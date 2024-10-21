@@ -1,10 +1,10 @@
 package br.com.minhasreceitas.apiminhasreceitas.service;
 
-import br.com.minhasreceitas.apiminhasreceitas.dto.RegisterDTO;
 import br.com.minhasreceitas.apiminhasreceitas.dto.UserChangePasswordDTO;
 import br.com.minhasreceitas.apiminhasreceitas.exception.AccessDeniedException;
 import br.com.minhasreceitas.apiminhasreceitas.exception.NotFoundException;
 import br.com.minhasreceitas.apiminhasreceitas.exception.PasswordNotMatchException;
+import br.com.minhasreceitas.apiminhasreceitas.exception.AlreadyRegisteredException;
 import br.com.minhasreceitas.apiminhasreceitas.model.User;
 import br.com.minhasreceitas.apiminhasreceitas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,19 +33,17 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
 
-    public User register(RegisterDTO data) {
-        if (userRepository.findByEmail(data.email()) != null) {
-            return null;
+    public void register(User user) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            throw new AlreadyRegisteredException("Email já cadastrado");
         }
-        String encodedPassword = passwordEncoder.encode(data.password());
-        User newUser = new User(data.name(), data.email(), encodedPassword, data.role());
-        userRepository.save(newUser);
-        return newUser;
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
     }
 
     private void validateUser(Integer id) {
-        User userLogged = getLoggedUser();
-        if(!userLogged.getId().equals(id)){
+        if(getLoggedUser().getId().equals(id)){
             throw new AccessDeniedException("Acesso negado.");
         }
     }
@@ -57,8 +55,7 @@ public class UserService {
     }
 
     public User getLoggedUser() {
-        String emailLoggedUser = SecurityContextHolder.getContext().getAuthentication().getName();
-        return (User) userRepository.findByEmail(emailLoggedUser);
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     public User update(User newUser, Integer id) {

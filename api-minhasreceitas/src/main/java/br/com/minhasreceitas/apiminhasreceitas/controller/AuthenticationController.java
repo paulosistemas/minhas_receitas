@@ -5,7 +5,6 @@ import br.com.minhasreceitas.apiminhasreceitas.dto.AuthenticationDTO;
 import br.com.minhasreceitas.apiminhasreceitas.dto.LoginResponseDTO;
 import br.com.minhasreceitas.apiminhasreceitas.model.User;
 
-import br.com.minhasreceitas.apiminhasreceitas.service.UserService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,6 @@ public class AuthenticationController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private TokenService tokenService;

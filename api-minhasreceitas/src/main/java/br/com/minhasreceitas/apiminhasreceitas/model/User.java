@@ -2,10 +2,12 @@ package br.com.minhasreceitas.apiminhasreceitas.model;
 
 import br.com.minhasreceitas.apiminhasreceitas.enums.UserRole;
 import jakarta.persistence.*;
+
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,8 +29,8 @@ public class User implements UserDetails {
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
+    @Email(message = "Email inválido")
     @Column(name = "email", unique = true, length = 100, nullable = false)
-    @Email
     private String email;
 
     @Column(name = "password", length = 100, nullable = false)

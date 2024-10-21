@@ -1,8 +1,6 @@
 package br.com.minhasreceitas.apiminhasreceitas.config;
 
-import br.com.minhasreceitas.apiminhasreceitas.exception.AccessDeniedException;
-import br.com.minhasreceitas.apiminhasreceitas.exception.NotFoundException;
-import br.com.minhasreceitas.apiminhasreceitas.exception.PasswordNotMatchException;
+import br.com.minhasreceitas.apiminhasreceitas.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,6 +24,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PasswordNotMatchException.class)
     private ResponseEntity<RestErrorMessage> passwordNotMatchHandler(PasswordNotMatchException ex) {
+        RestErrorMessage error = new RestErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(CannotBeDeletedException.class)
+    private ResponseEntity<RestErrorMessage> cannotBeDeletedHandler(CannotBeDeletedException ex) {
+        RestErrorMessage error = new RestErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(AlreadyRegisteredException.class)
+    private ResponseEntity<RestErrorMessage> UserAlreadyRegisteredHandler(AlreadyRegisteredException ex) {
         RestErrorMessage error = new RestErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
