@@ -4,6 +4,7 @@ import { Router} from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'app-register',
   standalone: true,
