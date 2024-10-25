@@ -39,4 +39,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         RestErrorMessage error = new RestErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    private ResponseEntity<RestErrorMessage> UserNotFound(InvalidCredentialsException ex) {
+        RestErrorMessage error = new RestErrorMessage(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
 }

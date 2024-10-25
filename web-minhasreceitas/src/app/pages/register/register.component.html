@@ -1,0 +1,19 @@
+<main xmlns="http://www.w3.org/1999/html">
+  <section>
+    <h2>Minhas Receitas</h2>
+    <form [formGroup]="registerForm" class="formColumn">
+      <label for="name">Email</label>
+      <input type="text" id="name" formControlName="name" placeholder="Nome"/>
+      <label for="email">Email</label>
+      <input type="text" id="email" formControlName="email" placeholder="mail@email.com"/>
+      <label for="password">Senha</label>
+      <input type="password" id="password" formControlName="password" placeholder="********"/>
+      <label for="password-confirm">Confirmar Senha</label>
+      <input type="password" id="password-confirm" formControlName="passwordConfirm" placeholder="********"/>
+      <div class="buttonGroup">
+        <button (click)="submit()" [disabled]="registerForm.invalid">Cancelar</button>
+        <button (click)="submit()" [disabled]="registerForm.invalid">Cadastrar</button>
+      </div>
+    </form>
+  </section>
+</main>

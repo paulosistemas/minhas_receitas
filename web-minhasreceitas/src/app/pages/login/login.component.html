@@ -1,0 +1,18 @@
+<main xmlns="http://www.w3.org/1999/html">
+  <section>
+    <h2>Minhas Receitas</h2>
+    <form [formGroup]="loginForm" class="formColumn">
+      <label for="email">Email</label>
+      <input type="text" id="email" formControlName="email" placeholder="mail@email.com"/>
+      <label for="password">Senha</label>
+      <input type="password" id="password" formControlName="password" placeholder="********"/>
+      <button (click)="submit()" [disabled]="loginForm.invalid">Login</button>
+    </form>
+    <div>
+      <p (click)="recoverPassword()">Esqueceu a Senha?</p>
+    </div>
+    <div>
+      <p (click)="register()">Não tem uma conta? Cadastre-se</p>
+    </div>
+  </section>
+</main>

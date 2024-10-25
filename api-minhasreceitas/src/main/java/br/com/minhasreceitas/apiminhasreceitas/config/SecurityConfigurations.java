@@ -24,17 +24,18 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/users/recover-password").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+        httpSecurity
+            .csrf(AbstractHttpConfigurer::disable)
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(authorize -> authorize
+                    .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/users/recover-password").permitAll()
+                    .anyRequest().authenticated()
+            )
+            .addFilterBefore(new CORSOptionsFilter(), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+        return httpSecurity.build();
     }
 
     @Bean
