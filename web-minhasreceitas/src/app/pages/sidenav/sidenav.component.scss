@@ -1,0 +1,28 @@
+.side-nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: #D9D9D9;
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+mat-toolbar {
+  position: relative;
+  z-index: 5;
+}
+
+.content {
+  padding: 24px;
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 64px);
+}
+
+mat-sidenav {
+  border-radius: 0;
+}
