@@ -31,16 +31,16 @@ export class LoginComponent {
   submit() {
     this.loginService.login(this.loginForm.value.email, this.loginForm.value.password)
       .subscribe({
-        next: () => this.router.navigate(['home']),
+        next: () => this.router.navigate(['receitas']),
         error: err => this.toastrService.error(err.error.message)
       })
   }
 
   recoverPassword() {
-    this.router.navigate(['recover'])
+    this.router.navigate(['recuperar'])
   }
 
   register() {
-    this.router.navigate(['register'])
+    this.router.navigate(['registrar'])
   }
 }

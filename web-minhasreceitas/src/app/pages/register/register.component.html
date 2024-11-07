@@ -11,7 +11,7 @@
       <label for="password-confirm">Confirmar Senha</label>
       <input type="password" id="password-confirm" formControlName="passwordConfirm" placeholder="********"/>
       <div class="buttonGroup">
-        <button (click)="submit()" [disabled]="registerForm.invalid">Cancelar</button>
+        <button (click)="back()">Cancelar</button>
         <button (click)="submit()" [disabled]="registerForm.invalid">Cadastrar</button>
       </div>
     </form>

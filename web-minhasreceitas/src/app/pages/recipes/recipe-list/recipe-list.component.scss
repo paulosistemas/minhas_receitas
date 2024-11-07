@@ -1,0 +1,11 @@
+.parent {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+.media-grid {
+  text-align: center;
+  overflow: hidden;
+}

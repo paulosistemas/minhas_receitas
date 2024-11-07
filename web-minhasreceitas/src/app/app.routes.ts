@@ -3,8 +3,11 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RecoverPasswordComponent } from './pages/recover-password/recover-password.component';
 import { HomeComponent } from './pages/home/home.component';
-import { AuthGuard } from './services/auth-guard.service';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { authGuard } from './config/auth.guard';
+import { categoryGuard } from './config/category.guard';
+
 
 export const APP_ROUTES: Routes = [
   {
@@ -14,23 +17,46 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: LoginComponent
   },
   {
-    path: 'register',
-    component: RegisterComponent,
+    path: 'registrar',
+    component: RegisterComponent
   },
   {
-    path: 'recover',
+    path: 'recuperar',
     component: RecoverPasswordComponent
   },
   {
-    path: 'home',
+    path: 'receitas',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        component: WelcomeComponent,
+      },
+      {
+        path: 'adicionar',
+        loadComponent: () => import('./pages/recipes/recipe-form/recipe-form.component').then(c => c.RecipeFormComponent)
+      },
+      {
+        path: 'editar',
+        loadComponent: () => import('./pages/recipes/recipe-form/recipe-form.component').then(c => c.RecipeFormComponent)
+      },
+      {
+        path: ':category',
+        loadChildren: () => import('./pages/recipes/recipes.routes').then(r => r.RECIPE_ROUTES),
+        canActivate: [authGuard, categoryGuard],
+      }
+    ]
   },
   {
     path: '**',
-    component: PageNotFoundComponent
+    redirectTo: '404'
   },
+  {
+    path: '404',
+    component: PageNotFoundComponent
+  }
 ];

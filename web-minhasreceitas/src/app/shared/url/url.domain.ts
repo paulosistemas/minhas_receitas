@@ -5,3 +5,10 @@ export class LoginUrl {
   static REGISTER_URL = 'users/register'
   static RECOVER = 'users/recover-password'
 }
+
+export class RecipeUrl {
+  static RECIPES_URL = 'recipes/'
+  static CREATE = RecipeUrl.RECIPES_URL + 'create'
+  static UPDATE = RecipeUrl.RECIPES_URL + 'update/'
+  static GET_ALL = RecipeUrl.RECIPES_URL + 'category/'
+}

@@ -1,0 +1,25 @@
+<mat-card appearance="outlined">
+  <figure>
+    <img src="" alt="" height="150px" width="150px">
+  </figure>
+  <p>{{ recipe.name }}</p>
+  <button>Editar</button>
+  <button>Remover</button>
+  <mat-card-content>
+    <p>Ingredientes:</p>
+    @for (ingredient of recipe.ingredients; track ingredient.id) {
+      <p>{{ ingredient.amount }}{{ ingredient.unit.type }}{{ ingredient.product.name }}</p>
+    }
+    <p>Modo de Preparo:</p>
+    <p>{{ recipe.preparationMode }}</p>
+    @if (recipe.hint) {
+      <p>Dicas para acompanhamento:</p>
+      <p>{{ recipe.hint }}</p>
+    }
+  </mat-card-content>
+</mat-card>
+
+
+
+
+

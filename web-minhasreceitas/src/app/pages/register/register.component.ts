@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} f
 import { Router} from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class RegisterComponent {
     private router: Router,
     private loginService: LoginService,
     private toastrService: ToastrService,
+    private location: Location
   ) {
     this.registerForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -44,5 +46,9 @@ export class RegisterComponent {
         },
         error: err => this.toastrService.error(err.error.message)
       })
+  }
+
+  back() {
+    this.location.back()
   }
 }

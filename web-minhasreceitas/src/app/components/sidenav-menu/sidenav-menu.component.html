@@ -1,0 +1,23 @@
+<div class="sidenav-header">
+  @if (sidenavCollapsed()) {
+    <button mat-mini-fab>
+      <mat-icon>add</mat-icon>
+    </button>
+  } @else {
+    <button mat-fab extended class="add-recipes" (click)="addRecipe()">
+      <mat-icon>add</mat-icon>
+      Adicionar Receitas
+    </button>
+  }
+</div>
+<mat-nav-list>
+  <mat-divider></mat-divider>
+  @for (item of menuItems(); track item.label) {
+    <a mat-list-item (click)="browseCategories(item)">
+      <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+      @if (!sidenavCollapsed()) {
+        <span class="label" matListItemTitle>{{ item.label }}</span>
+      }
+    </a>
+  }
+</mat-nav-list>
