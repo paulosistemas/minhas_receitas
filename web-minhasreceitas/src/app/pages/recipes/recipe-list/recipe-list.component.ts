@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../../../services/recipe.service';
 import { delay } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { Recipe } from '../../../shared/model/recipe';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -26,7 +25,6 @@ export class RecipeListComponent implements OnInit {
 
   recipes:RecipeResponse[] = []
   category!: string;
-  cakes: Recipe[] = []
   loading = true;
   categoryName = ''
 
@@ -42,7 +40,6 @@ export class RecipeListComponent implements OnInit {
       this.category = params['category'];
       this.loadData(this.category)
     })
-    this.cakes = this.recipeService.list()
   }
 
   loadData(category: string) {
@@ -85,6 +82,6 @@ export class RecipeListComponent implements OnInit {
   }
 
   viewRecipe(recipe: RecipeResponse) {
-    this.router.navigate([`${this.router.url}/${recipe.id}`], {state: recipe});
+    this.router.navigate([`${this.router.url}/${recipe.id}`], { state: recipe });
   }
 }

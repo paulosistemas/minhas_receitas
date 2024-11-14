@@ -7,7 +7,7 @@
     <div class="parent">
       <mat-card class="media-grid" appearance="outlined" (click)="viewRecipe(recipe)">
         <figure>
-          <img src="" alt="" height="150px" width="150px">
+          <img [src]=recipe.image alt="" height="150px" width="150px">
         </figure>
         <p>{{ recipe.name }}</p>
       </mat-card>

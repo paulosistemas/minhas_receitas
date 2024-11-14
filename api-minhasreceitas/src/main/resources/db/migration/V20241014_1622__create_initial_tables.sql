@@ -37,7 +37,7 @@ CREATE TABLE recipe(
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     hint VARCHAR(200),
-    image VARCHAR(1000),
+    image TEXT,
     preparation_mode TEXT NOT NULL,
     user_id INTEGER NOT NULL,
     category_id INTEGER NOT NULL,

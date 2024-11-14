@@ -38,6 +38,5 @@ export class RecipeViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.recipe = history.state
-    console.log(this.recipe)
   }
 }

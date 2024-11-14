@@ -1,3 +1,103 @@
 <mat-toolbar>
   <span>Adicionar Receita</span>
 </mat-toolbar>
+<section>
+  <form [formGroup]="recipeForm" class="formColumn">
+    <div class="recipe-form">
+      <div class="name-category">
+        <mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input matInput type="text" formControlName="name">
+          @if (recipeForm.get('name')?.value) {
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="recipeForm.get('name')?.setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+        <mat-form-field formGroupName="category">
+          <mat-label>Categoria</mat-label>
+          <mat-select formControlName="id">
+            @for (category of categoryList; track category) {
+              <mat-option [value]="category.id">{{category.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>Ingredientes *  <label> <a class="link" (click)="manageProduct()">Clique aqui</a> para gerenciar produtos</label></div>
+      <mat-card class="ingredients-form">
+        <div [formGroup]="ingredientForm">
+          <mat-form-field>
+            <mat-label>Quantidade</mat-label>
+            <input matInput type="text" formControlName="amount">
+          </mat-form-field>
+          <mat-form-field formGroupName="unit">
+            <mat-label>Unidade</mat-label>
+            <mat-select formControlName="id">
+              @for (unit of unitList; track unit) {
+                <mat-option [value]="unit.id">{{unit.name}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field formGroupName="product">
+            <mat-label>Produto</mat-label>
+            <mat-select formControlName="id">
+              @for (product of products; track product) {
+                <mat-option [value]="product.id">{{product.name}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <button (click)="addIngredient()" [disabled]="ingredientForm.invalid">Adicionar</button>
+        </div>
+        <div>
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- amount Column -->
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Quantidade </th>
+              <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+            </ng-container>
+
+            <!-- unit Column -->
+            <ng-container matColumnDef="unit">
+              <th mat-header-cell *matHeaderCellDef> Unidade </th>
+              <td mat-cell *matCellDef="let element"> {{element.unit}} </td>
+            </ng-container>
+
+            <!-- product Column -->
+            <ng-container matColumnDef="productName">
+              <th mat-header-cell *matHeaderCellDef> Produto </th>
+              <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+        </div>
+      </mat-card>
+      <mat-form-field>
+        <mat-label>Modo de preparo</mat-label>
+        <textarea matInput formControlName="preparationMode"></textarea>
+      </mat-form-field>
+      <div class="hint-image">
+        <mat-form-field>
+          <mat-label>Dicas para acompanhamento</mat-label>
+          <input matInput type="text" formControlName="hint">
+          @if (recipeForm.get('hint')?.value) {
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="recipeForm.get('hint')?.setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+        <input type="file" class="file-input" (change)="onImageSelected($event)" formControlName="image">
+      </div>
+      <div class="buttons">
+        <button>Cancelar</button>
+        <button (click)="submit()" [disabled]="recipeForm.invalid">Salvar</button>
+      </div>
+    </div>
+  </form>
+</section>

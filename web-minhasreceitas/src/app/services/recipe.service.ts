@@ -1,29 +1,21 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { RecipeUrl, SERVER_URL } from '../shared/url/url.domain';
-import { Recipe } from '../shared/model/recipe';
 import { RecipeResponse } from '../types/recipe.type';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
+  private http = inject(HttpClient)
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   getAll(categoryId: number) {
     return this.http.get<RecipeResponse[]>(SERVER_URL + RecipeUrl.GET_ALL + categoryId);
   }
 
-  list(): Recipe[] {
-    return [
-      {
-        id: 1,
-        name: 'Teste',
-        hint: 'hint_hint',
-        image: 'image_image',
-        preparationMode: 'preparationMode_preparationMode'
-      }
-    ]
+  save(recipe: RecipeResponse) {
+    return this.http.post<RecipeResponse>(SERVER_URL + RecipeUrl.CREATE, recipe);
   }
 }

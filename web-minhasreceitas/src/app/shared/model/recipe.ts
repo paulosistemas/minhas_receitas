@@ -4,18 +4,18 @@ export interface Recipe {
   hint?: string;
   image?: string;
   preparationMode: string;
-  // category: {
-  //   id: number;
-  // }
-  // ingredients: [
-  //   {
-  //     product: {
-  //       id: number;
-  //     },
-  //     unit: {
-  //       id: number;
-  //     },
-  //     amount: string;
-  //   }
-  // ]
+  category: {
+    id: number;
+  }
+  ingredients: [
+    {
+      product: {
+        id: number;
+      },
+      unit: {
+        id: number;
+      },
+      amount: string;
+    }
+  ]
 }

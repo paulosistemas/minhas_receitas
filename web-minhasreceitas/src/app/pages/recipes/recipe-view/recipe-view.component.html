@@ -8,7 +8,7 @@
   <mat-card-content>
     <p>Ingredientes:</p>
     @for (ingredient of recipe.ingredients; track ingredient.id) {
-      <p>{{ ingredient.amount }}{{ ingredient.unit.type }}{{ ingredient.product.name }}</p>
+      <p>{{ ingredient?.amount }}{{ ingredient.unit?.type }}{{ ingredient.product.name }}</p>
     }
     <p>Modo de Preparo:</p>
     <p>{{ recipe.preparationMode }}</p>

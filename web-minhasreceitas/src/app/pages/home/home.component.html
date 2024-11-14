@@ -2,7 +2,9 @@
   <button mat-icon-button (click)="collapsed.set(!collapsed())">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Minhas Receitas</span>
+  <div>
+    <span (click)="welcomeNavigate()" class="home-title">Minhas Receitas</span>
+  </div>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>account_circle</mat-icon>
   </button>

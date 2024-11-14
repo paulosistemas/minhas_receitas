@@ -1,0 +1,28 @@
+.recipe-form {
+  display: flex;
+  flex-direction: column;
+
+  .name-category {
+    display: flex;
+  }
+
+  .ingredients-form {
+    margin: 10px 0 10px;
+    padding: 15px;
+  }
+
+  .hint-image {
+    display: block;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  a {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

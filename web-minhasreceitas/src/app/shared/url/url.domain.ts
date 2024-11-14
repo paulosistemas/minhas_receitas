@@ -12,3 +12,7 @@ export class RecipeUrl {
   static UPDATE = RecipeUrl.RECIPES_URL + 'update/'
   static GET_ALL = RecipeUrl.RECIPES_URL + 'category/'
 }
+
+export class ProductUrl {
+  static PRODUCT_URL = 'products'
+}

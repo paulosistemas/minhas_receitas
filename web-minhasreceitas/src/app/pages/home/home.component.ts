@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidenavMenuComponent } from '../../components/sidenav-menu/sidenav-menu.component';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatDivider } from '@angular/material/divider';
 import { LoginService } from '../../services/login.service';
@@ -29,6 +29,7 @@ import { LoginService } from '../../services/login.service';
 })
 export class HomeComponent {
 
+  private router = inject(Router);
   private loginService = inject(LoginService);
 
   constructor() {
@@ -42,5 +43,9 @@ export class HomeComponent {
 
   logout() {
     this.loginService.logout()
+  }
+
+  welcomeNavigate() {
+    this.router.navigate(['/receitas'])
   }
 }

@@ -6,7 +6,7 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { authInterceptor } from './config/auth-interceptor';
+import { authInterceptor } from './config/auth.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
