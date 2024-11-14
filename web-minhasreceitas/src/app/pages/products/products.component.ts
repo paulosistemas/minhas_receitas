@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatToolbar } from '@angular/material/toolbar';
 
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -33,23 +33,23 @@ import { ProductType } from '../../types/product-type';
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent implements OnInit {
-  readonly dialogRef = inject(MatDialogRef<ProductsComponent>)
+
   productForm!: FormGroup;
   displayedColumns: string[] = ['name', 'actions'];
   productService = inject(ProductService);
   toastrService = inject(ToastrService);
   products: ProductType[] = []
+  data = inject(MAT_DIALOG_DATA);
 
   constructor() {
     this.productForm = new FormGroup({
       id: new FormControl('', []),
       name: new FormControl('', [Validators.required])
     })
+    this.products = this.data.products
   }
 
-  ngOnInit(): void {
-    this.getAll()
-  }
+  ngOnInit(): void {}
 
   submit() {
     this.productService.create(this.productForm.value.name).subscribe({

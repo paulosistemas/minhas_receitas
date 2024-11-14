@@ -166,6 +166,9 @@ export class RecipeFormComponent implements OnInit {
     const dialogRef = this.dialog.open(ProductsComponent, {
       width: '500px',
       height: '500px',
+      data: {
+        products: this.products
+      }
     })
 
     dialogRef.afterClosed().subscribe(() => {
