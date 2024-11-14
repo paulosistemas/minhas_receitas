@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
-import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup , ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
@@ -32,7 +32,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
   standalone: true,
   imports: [
     MatToolbar,
-    FormsModule,
     MatSelectModule,
     ReactiveFormsModule,
     MatInput,
@@ -103,6 +102,10 @@ export class RecipeFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAll();
+  }
+
+  getAll() {
     this.productService.getAll()
       .subscribe({
         next: data => {
@@ -146,22 +149,27 @@ export class RecipeFormComponent implements OnInit {
     })
   }
 
-  onImageSelected(event:any) {
+  onImageSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0]
       const reader = new FileReader()
       reader.onload = () => {
-        this.recipeForm.patchValue({ image: reader.result })
+        let base64Image = reader.result as string;
+        this.recipeForm.patchValue({ image: base64Image })
       };
       reader.readAsDataURL(file)
     }
   }
 
   manageProduct() {
-    this.dialog.open(ProductsComponent, {
+    const dialogRef = this.dialog.open(ProductsComponent, {
       width: '500px',
       height: '500px',
+    })
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getAll()
     })
   }
 }

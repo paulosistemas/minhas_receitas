@@ -13,4 +13,8 @@ export class ProductService {
   getAll() {
     return this.http.get<ProductType[]>(SERVER_URL + ProductUrl.PRODUCT_URL);
   }
+
+  create(name: string) {
+    return this.http.post<ProductType>(SERVER_URL + ProductUrl.CREATE, { name });
+  }
 }

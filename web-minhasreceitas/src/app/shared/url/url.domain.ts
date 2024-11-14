@@ -15,4 +15,5 @@ export class RecipeUrl {
 
 export class ProductUrl {
   static PRODUCT_URL = 'products'
+  static CREATE = ProductUrl.PRODUCT_URL + '/create'
 }
