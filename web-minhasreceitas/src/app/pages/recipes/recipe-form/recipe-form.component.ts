@@ -7,25 +7,12 @@ import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { HttpClient } from '@angular/common/http';
 import { RecipeService } from '../../../services/recipe.service';
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from '../../../services/product.service';
 import { ProductType } from '../../../types/product-type';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ProductsComponent } from '../../products/products.component';
-
-export interface PeriodicElement {
-  amount: number;
-  unit: string;
-  productName: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {amount: 1, unit: 'Hydrogen', productName: 'Hydrogen'},
-  {amount: 2, unit: 'Helium', productName: 'Hydrogen'},
-  {amount: 3, unit: 'Lithium', productName: 'Hydrogen'}
-];
 
 @Component({
   selector: 'app-recipe-form',
@@ -70,9 +57,7 @@ export class RecipeFormComponent implements OnInit {
   ]
 
   displayedColumns: string[] = ['amount', 'unit', 'productName'];
-  dataSource = ELEMENT_DATA;
   products: ProductType[] = []
-  private http = inject(HttpClient);
   private productService = inject(ProductService);
   private recipeService = inject(RecipeService);
   private toastrService = inject(ToastrService);
@@ -94,9 +79,11 @@ export class RecipeFormComponent implements OnInit {
       amount: new FormControl('', []),
       unit: new FormGroup({
         id: new FormControl('', []),
+        name: new FormControl('', []),
       }),
       product: new FormGroup({
         id: new FormControl('', [Validators.required]),
+        name: new FormControl('', []),
       })
     })
   }
@@ -120,18 +107,35 @@ export class RecipeFormComponent implements OnInit {
   }
 
   addIngredient() {
+    this.removeFormControl()
+    this.ingredients.push(new FormGroup({
+      amount: new FormControl(this.ingredientForm.get('amount')?.value),
+      unit: new FormControl(this.ingredientForm.get('unit.id')?.value),
+      product: new FormControl(this.ingredientForm.get('product.id')?.value),
+    }))
+    this.ingredientForm.reset()
+
+    this.addFormControl()
+  }
+
+  removeFormControl(): void {
     if (!this.ingredientForm.get('amount')?.value) {
       this.ingredientForm.removeControl('amount')
     }
     if (!this.ingredientForm.get('unit.id')?.value) {
       this.ingredientForm.removeControl('unit')
     }
-    this.ingredients.push(new FormGroup({
-      amount: new FormControl(this.ingredientForm.get('amount')?.value),
-      unit: new FormControl(this.ingredientForm.get('unit')?.value),
-      product: new FormControl(this.ingredientForm.get('product')?.value),
-    }))
-    this.ingredientForm.reset()
+  }
+
+  addFormControl(): void {
+    if (!this.ingredientForm.get('amount')) {
+      this.ingredientForm.addControl('amount', new FormControl('', []))
+    }
+    if (!this.ingredientForm.get('unit')) {
+      this.ingredientForm.addControl('unit', new FormGroup({
+        id: new FormControl('', []),
+      }))
+    }
   }
 
   removeIngredient(id: number) {
@@ -142,7 +146,7 @@ export class RecipeFormComponent implements OnInit {
     this.recipeService.save(this.recipeForm.value)
       .subscribe({
       next: () => {
-        this.toastrService.success("Conta cadastrada com sucesso!")
+        this.toastrService.success("Receita salva com sucesso!")
         this.recipeForm.reset()
       },
       error: err => this.toastrService.error(err.error.message)
@@ -164,8 +168,7 @@ export class RecipeFormComponent implements OnInit {
 
   manageProduct() {
     const dialogRef = this.dialog.open(ProductsComponent, {
-      width: '500px',
-      height: '500px',
+      panelClass: 'my-outlined-dialog',
       data: {
         products: this.products
       }

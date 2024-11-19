@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../../../services/recipe.service';
-import { delay } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { RecipeResponse } from '../../../types/recipe.type';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-recipe-list',
@@ -17,6 +17,7 @@ import { RecipeResponse } from '../../../types/recipe.type';
     MatCardModule,
     MatToolbar,
     MatProgressSpinner,
+    ReactiveFormsModule,
   ],
   templateUrl: './recipe-list.component.html',
   styleUrl: './recipe-list.component.scss'
@@ -24,6 +25,7 @@ import { RecipeResponse } from '../../../types/recipe.type';
 export class RecipeListComponent implements OnInit {
 
   recipes:RecipeResponse[] = []
+  filteredRecipes: RecipeResponse[] = []
   category!: string;
   loading = true;
   categoryName = ''
@@ -32,14 +34,30 @@ export class RecipeListComponent implements OnInit {
   private router = inject(Router);
   private recipeService = inject(RecipeService);
   private toastrService = inject(ToastrService);
+  searchControl = new FormControl('');
 
   constructor() {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      this.searchControl.setValue('')
       this.category = params['category'];
       this.loadData(this.category)
     })
+    this.searchControl.valueChanges.subscribe(search => {
+      this.filterRecipes(search);
+    })
+  }
+
+  filterRecipes(search: string | null) {
+
+    if (!search) {
+      this.filteredRecipes = [...this.recipes]
+    } else {
+      this.filteredRecipes = this.recipes.filter(recipe => {
+        return recipe.name.toLowerCase().includes(search.toLowerCase())
+      })
+    }
   }
 
   loadData(category: string) {
@@ -71,13 +89,16 @@ export class RecipeListComponent implements OnInit {
 
   fetchDataApi(categoryId: number) {
     this.recipeService.getAll(categoryId)
-      .pipe(delay(1000))
       .subscribe({
         next: data => {
           this.recipes = data
+          this.filteredRecipes = [...this.recipes]
           this.loading = false
         },
-        error: err => this.toastrService.error(err.error.message),
+        error: err => {
+          this.toastrService.error(err.error.message)
+          this.loading = false
+        }
       })
   }
 

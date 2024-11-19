@@ -2,8 +2,15 @@
   <span>{{ categoryName }}</span>
 </mat-toolbar>
 
+<input
+  type="text"
+  placeholder="Buscar receitas..."
+  [formControl]="searchControl"
+  class="form-control"
+/>
+
 @if (!loading){
-  @for (recipe of recipes; track recipe.id) {
+  @for (recipe of filteredRecipes; track recipe.id) {
     <div class="parent">
       <mat-card class="media-grid" appearance="outlined" (click)="viewRecipe(recipe)">
         <figure>
