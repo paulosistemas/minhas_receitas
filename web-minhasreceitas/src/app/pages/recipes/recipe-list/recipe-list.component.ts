@@ -50,7 +50,6 @@ export class RecipeListComponent implements OnInit {
   }
 
   filterRecipes(search: string | null) {
-
     if (!search) {
       this.filteredRecipes = [...this.recipes]
     } else {

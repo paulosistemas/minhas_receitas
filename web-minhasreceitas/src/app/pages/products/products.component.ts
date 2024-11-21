@@ -39,6 +39,7 @@ export class ProductsComponent implements OnInit {
   productService = inject(ProductService);
   toastrService = inject(ToastrService);
   products: ProductType[] = []
+  filteredProducts: ProductType[] = []
   data = inject(MAT_DIALOG_DATA);
 
   constructor() {
@@ -66,8 +67,13 @@ export class ProductsComponent implements OnInit {
     this.productService.getAll().subscribe({
       next: data => {
         this.products = data
+        this.filteredProducts = [...this.products]
       },
       error: err => this.toastrService.error(err.error.message)
     })
+  }
+
+  testando(event: any) {
+    console.log(event)
   }
 }

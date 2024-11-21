@@ -56,7 +56,7 @@ export class RecipeFormComponent implements OnInit {
     { 'id': 9, 'name': 'Xícara(s)' }
   ]
 
-  displayedColumns: string[] = ['amount', 'unit', 'productName'];
+  displayedColumns: string[] = ['amount', 'unit', 'productName', 'action'];
   products: ProductType[] = []
   private productService = inject(ProductService);
   private recipeService = inject(RecipeService);
@@ -138,8 +138,12 @@ export class RecipeFormComponent implements OnInit {
     }
   }
 
-  removeIngredient(id: number) {
-    this.ingredients.removeAt(id)
+  removeIngredient(ingredient: FormControl): void {
+    this.ingredients.controls.map(data => {
+      if (ingredient === data.value) {
+        this.ingredients.removeAt(data.value)
+      }
+    })
   }
 
   submit() {
