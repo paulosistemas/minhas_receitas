@@ -7,12 +7,18 @@
   <input type="text" id="name" formControlName="name" />
   <button (click)="submit()" [disabled]="productForm.invalid">Adicionar</button>
   <mat-form-field class="example-full-width">
-    <input type="tel" matInput placeholder="Pesquisar">
+    <input
+      matInput
+      type="text"
+      placeholder="Pesquisar..."
+      [formControl]="searchControl"
+      class="form-control"
+    />
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 </form>
 <mat-card>
-  <table mat-table [dataSource]="products" class="mat-elevation-z8">
+  <table mat-table [dataSource]="filteredProducts" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Nome </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>

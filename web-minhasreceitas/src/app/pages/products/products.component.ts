@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatToolbar } from '@angular/material/toolbar';
 
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -41,6 +41,8 @@ export class ProductsComponent implements OnInit {
   products: ProductType[] = []
   filteredProducts: ProductType[] = []
   data = inject(MAT_DIALOG_DATA);
+  searchControl = new FormControl('');
+
 
   constructor() {
     this.productForm = new FormGroup({
@@ -48,9 +50,24 @@ export class ProductsComponent implements OnInit {
       name: new FormControl('', [Validators.required])
     })
     this.products = this.data.products
+    this.filteredProducts = this.data.products
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.searchControl.valueChanges.subscribe(search => {
+      this.filterRecipes(search);
+    })
+  }
+
+  filterRecipes(search: string | null) {
+    if (!search) {
+      this.filteredProducts = [...this.products]
+    } else {
+      this.filteredProducts = this.products.filter(recipe => {
+        return recipe.name.toLowerCase().includes(search.toLowerCase())
+      })
+    }
+  }
 
   submit() {
     this.productService.create(this.productForm.value.name).subscribe({
