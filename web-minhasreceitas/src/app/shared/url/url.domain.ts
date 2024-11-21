@@ -16,4 +16,6 @@ export class RecipeUrl {
 export class ProductUrl {
   static PRODUCT_URL = 'products'
   static CREATE = ProductUrl.PRODUCT_URL + '/create'
+  static UPDATE = ProductUrl.PRODUCT_URL + '/update/'
+  static DELETE = ProductUrl.PRODUCT_URL + '/'
 }

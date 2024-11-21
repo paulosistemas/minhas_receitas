@@ -17,4 +17,8 @@ export class ProductService {
   create(name: string) {
     return this.http.post<ProductType>(SERVER_URL + ProductUrl.CREATE, { name });
   }
+
+  delete(id: number) {
+    return this.http.delete(SERVER_URL + ProductUrl.DELETE + id);
+  }
 }
