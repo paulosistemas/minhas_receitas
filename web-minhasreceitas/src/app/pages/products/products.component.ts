@@ -43,6 +43,8 @@ export class ProductsComponent implements OnInit {
   filteredProducts: ProductType[] = []
   data = inject(MAT_DIALOG_DATA);
   searchControl = new FormControl('');
+  editProductId: number | null = null;
+
   readonly dialog = inject(MatDialog);
 
   constructor() {
@@ -71,14 +73,26 @@ export class ProductsComponent implements OnInit {
   }
 
   submit() {
-    this.productService.create(this.productForm.value.name).subscribe({
-      next: () => {
-        this.toastrService.success("Produto adicionado com sucesso!")
-        this.productForm.reset()
-        this.getAll()
-      },
-      error: err => this.toastrService.error(err.error.message)
-    })
+    if (this.editProductId) {
+      this.productService.update(this.editProductId, this.productForm.value.name).subscribe({
+        next: () => {
+          this.toastrService.success("Produto atualizado com sucesso!")
+          this.productForm.reset()
+          this.getAll()
+        },
+        error: err => this.toastrService.error(err.error.message)
+      })
+    } else {
+      this.productService.create(this.productForm.value.name).subscribe({
+        next: () => {
+          this.toastrService.success("Produto adicionado com sucesso!")
+          this.productForm.reset()
+          this.getAll()
+        },
+        error: err => this.toastrService.error(err.error.message)
+      })
+    }
+
   }
 
   getAll() {
@@ -110,7 +124,8 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  edit(id: number) {
-    console.log('EDIT', id)
+  edit(product: any) {
+    this.editProductId = product.id
+    this.productForm.patchValue({ name: product.name })
   }
 }
