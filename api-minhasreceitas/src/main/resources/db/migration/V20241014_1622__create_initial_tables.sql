@@ -59,7 +59,7 @@ CREATE TABLE ingredient(
 --------------------------------- INSERT VALUES ------------------------------------
 
 INSERT INTO user_account (id, name, email, password, role, image)
-VALUES (1, 'Paulo Leite', 'paulo.sistemas@live.com', '$2a$10$0nNY7kBMffsOPPY8pHMKGOBl4tT5zPe9P2m1m9LSfrGW4o988nvde', 1, null);
+VALUES (1, 'Conta Demo', 'contademo@email.com', '$2a$10$0nNY7kBMffsOPPY8pHMKGOBl4tT5zPe9P2m1m9LSfrGW4o988nvde', 1, null);
 
 INSERT INTO category (id, name)
 VALUES
