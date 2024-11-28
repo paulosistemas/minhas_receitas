@@ -1,4 +1,4 @@
-export const SERVER_URL = 'http://localhost:8080/'
+export const SERVER_URL = 'http://3.21.12.85:8080/'
 
 export class LoginUrl {
   static LOGIN_URL = 'auth/login'
