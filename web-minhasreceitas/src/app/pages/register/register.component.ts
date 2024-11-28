@@ -1,10 +1,18 @@
 import { Component, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators
+} from '@angular/forms';
 import { Router} from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { Location, NgOptimizedImage } from '@angular/common';
-import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatFormField, MatHint, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
@@ -23,7 +31,8 @@ import { MatButton, MatIconButton } from '@angular/material/button';
     MatIcon,
     MatIconButton,
     MatSuffix,
-    MatButton
+    MatButton,
+    MatHint
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -43,7 +52,7 @@ export class RegisterComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(6)])
-    })
+    }, { validators: this.passwordMatchValidator() })
   }
 
   submit() {
@@ -63,5 +72,24 @@ export class RegisterComponent {
 
   back() {
     this.location.back()
+  }
+
+  private passwordMatchValidator() {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const password = group.get('password')?.value;
+      const passwordConfirm = group.get('passwordConfirm')?.value;
+      const errors: ValidationErrors = {};
+      if (password && passwordConfirm && password !== passwordConfirm) {
+        errors['passwordMismatch'] = true;
+      }
+      return Object.keys(errors).length ? errors : null;
+    };
+  }
+
+  getErrorMessage(field: string): string | null {
+    if (field === 'passwordConfirm' && this.registerForm.hasError('passwordMismatch')) {
+      return 'Senhas não conferem.';
+    }
+    return null;
   }
 }

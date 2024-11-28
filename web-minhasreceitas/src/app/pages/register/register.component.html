@@ -38,6 +38,7 @@
         >
           <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
+        <mat-hint class="hint-color">{{ getErrorMessage('passwordConfirm') }}</mat-hint>
       </mat-form-field>
       <div class="button-group">
         <button mat-button disableRipple class="custom-button white-button" (click)="back()">Cancelar</button>
