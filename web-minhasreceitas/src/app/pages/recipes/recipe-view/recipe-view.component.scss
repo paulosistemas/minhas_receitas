@@ -1,0 +1,26 @@
+.main-container {
+  padding: 18px;
+}
+
+.image-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .img {
+    border-radius: 10px;
+    object-fit: cover;
+  }
+}
+
+.custom-button {
+  width: 100px;
+}
+
+.edit-button {
+  margin-right: 10px;
+}
+
+.preparation-mode {
+  white-space: pre-wrap;
+}

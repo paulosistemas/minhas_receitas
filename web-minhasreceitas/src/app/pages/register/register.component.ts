@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router} from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
-import { Location } from '@angular/common';
+import { Location, NgOptimizedImage } from '@angular/common';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton, MatIconButton } from '@angular/material/button';
 
 
 @Component({
@@ -11,13 +15,22 @@ import { Location } from '@angular/common';
   standalone: true,
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgOptimizedImage,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatIcon,
+    MatIconButton,
+    MatSuffix,
+    MatButton
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
   registerForm!: FormGroup;
+  hide = signal(true);
 
   constructor(
     private router: Router,

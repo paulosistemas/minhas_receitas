@@ -1,0 +1,48 @@
+.main-container {
+  padding: 18px;
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+
+  .input-name {
+    width: 350px;
+    margin-right: 8px;
+  }
+
+  .input-search {
+    width: 100%
+  }
+}
+
+.custom-button {
+  background-color: #292929 !important;
+  color: white !important;
+  width: 150px !important;
+  height: 56px !important;
+  border: none;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: black !important;
+  }
+  &:disabled {
+    background-color: rgba(26, 27, 31, 0.12) !important;
+    color: rgba(26, 27, 31, 0.38) !important;
+  }
+}
+
+.mat-column-actions {
+  width: 120px;
+  text-align: center;
+}
+
+.blue-icon {
+  color: #5050fc;
+}
+
+.red-icon {
+  color: #cf0202;
+}

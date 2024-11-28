@@ -1,5 +1,69 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'ngx-toastr/toastr';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-dialog-surface {
+  border-radius: 0 !important;
+}
+
+.mat-mdc-row {
+  height: 30px !important;
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background: #E8E8E8 !important;
+}
+
+.mat-mdc-cell {
+  border: none !important;
+}
+
+.mat-mdc-icon-button .mat-mdc-button-ripple,
+.mat-mdc-icon-button .mat-mdc-button-persistent-ripple,
+.mat-mdc-icon-button .mat-mdc-button-persistent-ripple::before {
+  border-radius: 8px !important;
+}
+
+.custom-button {
+  background-color: #292929 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+
+  &.white-button {
+    background-color: transparent !important;
+    color: #292929 !important;
+
+    &:hover {
+      background-color: #E3E3E4 !important;
+    }
+  }
+
+  &:hover {
+    background-color: black !important;
+  }
+
+  &:disabled {
+    background-color: rgba(26, 27, 31, 0.12) !important;
+    color: rgba(26, 27, 31, 0.38) !important;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.mat-mdc-dialog-surface {
+  border-radius: 0 !important;
+}

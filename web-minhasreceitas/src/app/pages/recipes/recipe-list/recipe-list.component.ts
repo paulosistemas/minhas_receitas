@@ -8,6 +8,9 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { RecipeResponse } from '../../../types/recipe.type';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-recipe-list',
@@ -18,6 +21,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     MatToolbar,
     MatProgressSpinner,
     ReactiveFormsModule,
+    MatFormField,
+    MatIcon,
+    MatInput,
+    MatLabel,
+    MatSuffix,
   ],
   templateUrl: './recipe-list.component.html',
   styleUrl: './recipe-list.component.scss'

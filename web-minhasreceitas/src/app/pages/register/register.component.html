@@ -1,18 +1,50 @@
 <main xmlns="http://www.w3.org/1999/html">
   <section>
-    <h2>Minhas Receitas</h2>
+    <img class="main-icon" ngSrc="/main-icon.svg" alt="comidas" height="57" width="57">
+    <h3 class="header">Minhas Receitas</h3>
     <form [formGroup]="registerForm" class="formColumn">
-      <label for="name">Email</label>
-      <input type="text" id="name" formControlName="name" placeholder="Nome"/>
-      <label for="email">Email</label>
-      <input type="text" id="email" formControlName="email" placeholder="mail@email.com"/>
-      <label for="password">Senha</label>
-      <input type="password" id="password" formControlName="password" placeholder="********"/>
-      <label for="password-confirm">Confirmar Senha</label>
-      <input type="password" id="password-confirm" formControlName="passwordConfirm" placeholder="********"/>
-      <div class="buttonGroup">
-        <button (click)="back()">Cancelar</button>
-        <button (click)="submit()" [disabled]="registerForm.invalid">Cadastrar</button>
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput type="text" id="name-reg" formControlName="name" autocomplete="off"/>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="text" id="email-reg" formControlName="email" autocomplete="off"/>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input id="password" formControlName="password" matInput [type]="hide() ? 'password' : 'text'"
+               autocomplete="new-password"/>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide.set(!hide())"
+          [attr.aria-label]="'Mostrar senha'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Confirmar Senha</mat-label>
+        <input id="password-confirm" formControlName="passwordConfirm" matInput [type]="hide() ? 'password' : 'text'"
+               autocomplete="new-password"/>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide.set(!hide())"
+          [attr.aria-label]="'Mostrar senha'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <div class="button-group">
+        <button mat-button disableRipple class="custom-button white-button" (click)="back()">Cancelar</button>
+        <button mat-flat-button disableRipple class="custom-button" (click)="submit()"
+                [disabled]="registerForm.invalid">
+          Cadastrar
+        </button>
       </div>
     </form>
   </section>

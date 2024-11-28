@@ -1,18 +1,30 @@
 <main xmlns="http://www.w3.org/1999/html">
   <section>
-    <h2>Minhas Receitas</h2>
+    <img class="main-icon" ngSrc="/main-icon.svg" alt="comidas" height="57" width="57">
+    <h3 class="header">Minhas Receitas</h3>
     <form [formGroup]="loginForm" class="formColumn">
-      <label for="email">Email</label>
-      <input type="text" id="email" formControlName="email" placeholder="mail@email.com"/>
-      <label for="password">Senha</label>
-      <input type="password" id="password" formControlName="password" placeholder="********"/>
-      <button (click)="submit()" [disabled]="loginForm.invalid">Login</button>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="text" id="email" formControlName="email"/>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input id="password" formControlName="password" matInput [type]="hide() ? 'password' : 'text'"/>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="clickEvent($event)"
+          [attr.aria-label]="'Mostrar senha'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <button mat-flat-button class="custom-button" (click)="submit()" [disabled]="loginForm.invalid">Login</button>
+      <a routerLink="/recuperar">Esqueceu a Senha?</a>
     </form>
-    <div>
-      <p (click)="recoverPassword()">Esqueceu a Senha?</p>
-    </div>
-    <div>
-      <p (click)="register()">Não tem uma conta? Cadastre-se</p>
+    <div class="footer-login">
+      <span>Não tem uma conta? <a routerLink="/registrar">Cadastre-se</a></span>
     </div>
   </section>
 </main>

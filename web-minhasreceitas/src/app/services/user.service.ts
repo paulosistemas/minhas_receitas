@@ -1,8 +1,8 @@
-import { inject, Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { SERVER_URL, UserUrl } from '../shared/url/url.domain';
-import { ChangePassword } from '../types/change-password.type';
-import { Profile } from '../types/profile.type';
+import {inject, Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import { SERVER_URL, UserUrl} from "../shared/url/url.domain";
+import {ChangePassword} from "../types/change-password.type";
+import {Profile} from "../types/profile.type";
 
 @Injectable({
   providedIn: 'root'

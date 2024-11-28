@@ -4,7 +4,7 @@ import { FormArray, FormControl, FormGroup , ReactiveFormsModule, Validators } f
 import { MatSelectModule } from '@angular/material/select';
 import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { RecipeService } from '../../../services/recipe.service';
@@ -14,6 +14,7 @@ import { ProductType } from '../../../types/product-type';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ProductsComponent } from '../../products/products.component';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-recipe-form',
@@ -27,7 +28,8 @@ import { ActivatedRoute } from '@angular/router';
     MatIconButton,
     MatCard,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButton
   ],
   templateUrl: './recipe-form.component.html',
   styleUrl: './recipe-form.component.scss'
@@ -63,6 +65,7 @@ export class RecipeFormComponent implements OnInit {
   private recipeService = inject(RecipeService);
   private toastrService = inject(ToastrService);
   private route = inject(ActivatedRoute);
+  private location = inject(Location);
   recipeId: number | null = null;
 
   constructor() {
@@ -93,8 +96,10 @@ export class RecipeFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.recipeId = this.route.snapshot.params['id'];
-    console.log('recipeId', this.recipeId);
     this.getAll();
+    if (this.recipeId) {
+      this.loadRecipe(this.recipeId);
+    }
   }
 
   getAll() {
@@ -152,14 +157,29 @@ export class RecipeFormComponent implements OnInit {
   }
 
   submit() {
-    this.recipeService.save(this.recipeForm.value)
-      .subscribe({
-      next: () => {
-        this.toastrService.success("Receita salva com sucesso!")
-        this.recipeForm.reset()
-      },
-      error: err => this.toastrService.error(err.error.message)
-    })
+    if (this.recipeId) {
+      this.recipeService.update(this.recipeForm.value).subscribe({
+        next: () => {
+          this.toastrService.success("Receita atualizada com sucesso!")
+          this.recipeForm.reset()
+          this.ingredients.clear()
+          this.location.back()
+        },
+        error: err => this.toastrService.error(err.error.message),
+      })
+    } else {
+      this.recipeService.save(this.recipeForm.value)
+        .subscribe({
+          next: () => {
+            this.toastrService.success("Receita salva com sucesso!")
+            this.recipeForm.reset()
+            this.ingredients.clear()
+            this.location.back()
+          },
+          error: err => this.toastrService.error(err.error.message)
+        })
+    }
+
   }
 
   onImageSelected(event: Event) {
@@ -177,6 +197,8 @@ export class RecipeFormComponent implements OnInit {
 
   manageProduct() {
     const dialogRef = this.dialog.open(ProductsComponent, {
+      width: '50vw',
+      height: '70vh',
       panelClass: 'my-outlined-dialog',
       data: {
         products: this.products
@@ -186,6 +208,26 @@ export class RecipeFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       this.getAll()
     })
+  }
+
+  private loadRecipe(recipeId: number) {
+    this.recipeService.getOne(recipeId).subscribe({
+      next: data => {
+        data.ingredients.forEach(ingredient => {
+          this.ingredients.push(new FormGroup({
+            amount: new FormControl(ingredient.amount),
+            unit: new FormControl(ingredient.unit),
+            product: new FormControl(ingredient.product),
+          }))
+        })
+        this.recipeForm.patchValue(data)
+      },
+      error: err => this.toastrService.error(err.error.message)
+    })
+  }
+
+  cancel() {
+    this.location.back()
   }
 }
 

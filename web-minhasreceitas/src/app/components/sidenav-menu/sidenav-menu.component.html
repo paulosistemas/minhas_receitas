@@ -1,10 +1,10 @@
 <div class="sidenav-header">
   @if (sidenavCollapsed()) {
-    <button mat-mini-fab>
+    <button class="custom-button" mat-mini-fab (click)="addRecipe()">
       <mat-icon>add</mat-icon>
     </button>
   } @else {
-    <button mat-fab extended class="add-recipes" (click)="addRecipe()">
+    <button mat-fab extended class="custom-button add-recipes" (click)="addRecipe()">
       <mat-icon>add</mat-icon>
       Adicionar Receitas
     </button>

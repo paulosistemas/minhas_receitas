@@ -1,11 +1,39 @@
 .parent {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
   cursor: pointer;
+  gap: 15px;
+
+  .img {
+    border-radius: 10px;
+    object-fit: cover;
+    padding-bottom: 20px;
+  }
+}
+
+.no-recipes {
+  display: flex;
+  justify-content: center;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
 }
 
 .media-grid {
   text-align: center;
   overflow: hidden;
+  padding: 20px;
+}
+
+.title-search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .search {
+    padding-top: 10px;
+  }
 }

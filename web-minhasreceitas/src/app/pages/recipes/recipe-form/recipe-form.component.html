@@ -5,7 +5,7 @@
   <form [formGroup]="recipeForm" class="formColumn">
     <div class="recipe-form">
       <div class="name-category">
-        <mat-form-field>
+        <mat-form-field class="input-name" appearance="outline">
           <mat-label>Nome</mat-label>
           <input matInput type="text" formControlName="name">
           @if (recipeForm.get('name')?.value) {
@@ -14,7 +14,7 @@
             </button>
           }
         </mat-form-field>
-        <mat-form-field formGroupName="category">
+        <mat-form-field class="input-category" appearance="outline" formGroupName="category">
           <mat-label>Categoria</mat-label>
           <mat-select formControlName="id">
             @for (category of categoryList; track category) {
@@ -25,31 +25,40 @@
       </div>
       <div>Ingredientes *  <label> <a class="link" (click)="manageProduct()">Clique aqui</a> para gerenciar produtos</label></div>
       <mat-card class="ingredients-form">
-        <div [formGroup]="ingredientForm">
-          <mat-form-field>
-            <mat-label>Quantidade</mat-label>
-            <input matInput type="text" formControlName="amount">
-          </mat-form-field>
-          <mat-form-field formGroupName="unit">
-            <mat-label>Unidade</mat-label>
-            <mat-select formControlName="id">
-              @for (unit of unitList; track unit) {
-                <mat-option [value]="unit">{{unit.name}}</mat-option>
+        <div [formGroup]="ingredientForm" class="inputs">
+          <div class="amount-unit">
+            <mat-form-field class="amount" appearance="outline">
+              <mat-label>Quantidade</mat-label>
+              <input matInput type="text" formControlName="amount">
+              @if (ingredientForm.get('amount')?.value) {
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="ingredientForm.get('amount')?.setValue('')">
+                  <mat-icon>close</mat-icon>
+                </button>
               }
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field formGroupName="product">
-            <mat-label>Produto</mat-label>
-            <mat-select formControlName="id">
-              @for (product of products; track product) {
-                <mat-option [value]="product">{{product.name}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-          <button (click)="addIngredient()" [disabled]="ingredientForm.invalid">Adicionar</button>
+            </mat-form-field>
+            <mat-form-field class="unit" appearance="outline" formGroupName="unit">
+              <mat-label>Unidade</mat-label>
+              <mat-select formControlName="id">
+                @for (unit of unitList; track unit) {
+                  <mat-option [value]="unit">{{unit.name}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="product-button">
+            <mat-form-field class="product" appearance="outline" formGroupName="product">
+              <mat-label>Produto</mat-label>
+              <mat-select formControlName="id">
+                @for (product of products; track product) {
+                  <mat-option [value]="product">{{product.name}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <button mat-flat-button class="custom-button" (click)="addIngredient()" [disabled]="ingredientForm.invalid">Adicionar</button>
+          </div>
         </div>
         <div>
-          <table mat-table [dataSource]="ingredients.value" class="mat-elevation-z8">
+          <table mat-table [dataSource]="ingredients.value">
 
             <!-- amount Column -->
             <ng-container matColumnDef="amount">
@@ -73,8 +82,8 @@
             <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef> Ação </th>
               <td mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="removeIngredient(element)">
-                  <mat-icon>delete</mat-icon>
+                <button mat-icon-button class="red-icon" (click)="removeIngredient(element)">
+                  <span class="material-symbols-outlined">delete</span>
                 </button>
               </td>
             </ng-container>
@@ -85,26 +94,36 @@
 
         </div>
       </mat-card>
-      <mat-form-field>
-        <mat-label>Modo de preparo</mat-label>
-        <textarea matInput formControlName="preparationMode"></textarea>
-      </mat-form-field>
-      <div class="hint-image">
-        <mat-form-field>
-          <mat-label>Dicas para acompanhamento</mat-label>
-          <input matInput type="text" formControlName="hint">
-          @if (recipeForm.get('hint')?.value) {
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="recipeForm.get('hint')?.setValue('')">
-              <mat-icon>close</mat-icon>
-            </button>
-          }
+      <div class="preparation-image">
+        <mat-form-field class="preparation" appearance="outline">
+          <mat-label>Modo de preparo</mat-label>
+          <textarea matInput formControlName="preparationMode"></textarea>
         </mat-form-field>
-        <input type="file" class="file-input" (change)="onImageSelected($event)" formControlName="image">
+        <input type="file" class="file-input" accept=".png,.jpeg,.jpg" (change)="onImageSelected($event)" #fileUpload>
+        <div class="file-upload">
+          @if (recipeForm.get('image')?.value) {
+            <img class="img" width="150px" height="150px" src="{{ recipeForm.get('image')?.value }}" alt="fotos">
+          } @else {
+            <img class="img" width="150px" height="150px" src="/no-image-icon.png" alt="fotos">
+          }
+          <button mat-flat-button class="upload-btn" (click)="fileUpload.click()">Selecionar</button>
+        </div>
       </div>
+      <mat-form-field class="hint" appearance="outline">
+        <mat-label>Dicas para acompanhamento</mat-label>
+        <input matInput type="text" formControlName="hint">
+        @if (recipeForm.get('hint')?.value) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="recipeForm.get('hint')?.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
       <div class="buttons">
-        <button>Cancelar</button>
-        <button (click)="submit()" [disabled]="recipeForm.invalid">Salvar</button>
+        <button mat-flat-button class="custom-button white-button cancel-button" (click)="cancel()">Cancelar</button>
+        <button mat-flat-button class="custom-button" (click)="submit()" [disabled]="recipeForm.invalid">Salvar</button>
       </div>
     </div>
   </form>
 </section>
+
+

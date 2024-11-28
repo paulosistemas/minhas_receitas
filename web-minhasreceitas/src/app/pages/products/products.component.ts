@@ -8,7 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
-import { MatIconButton } from '@angular/material/button';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDivider } from '@angular/material/divider';
 import { ProductService } from '../../services/product.service';
@@ -28,7 +28,8 @@ import { DeleteModalComponent } from '../../shared/delete-modal/delete-modal.com
     MatIconButton,
     MatCard,
     MatTableModule,
-    MatDivider
+    MatDivider,
+    MatButtonModule
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
@@ -79,6 +80,7 @@ export class ProductsComponent implements OnInit {
           this.toastrService.success("Produto atualizado com sucesso!")
           this.productForm.reset()
           this.getAll()
+          this.editProductId = null
         },
         error: err => this.toastrService.error(err.error.message)
       })

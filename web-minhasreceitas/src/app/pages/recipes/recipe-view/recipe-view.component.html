@@ -1,25 +1,35 @@
 <mat-card appearance="outlined">
-  <figure>
-    <img [src]="recipe.image" alt="" height="150px" width="150px">
-  </figure>
-  <p>{{ recipe.name }}</p>
-  <button (click)="edit()">Editar</button>
-  <button (click)="delete(recipe.id)">Remover</button>
-  <mat-card-content>
-    <p>Ingredientes:</p>
-    @for (ingredient of recipe.ingredients; track ingredient.id) {
-      <p>{{ ingredient?.amount }}{{ ingredient.unit?.type }}{{ ingredient.product.name }}</p>
-    }
-    <p>Modo de Preparo:</p>
-    <p>{{ recipe.preparationMode }}</p>
-    @if (recipe.hint) {
-      <p>Dicas para acompanhamento:</p>
-      <p>{{ recipe.hint }}</p>
-    }
-  </mat-card-content>
+  <div class="main-container">
+    <div class="image-buttons">
+      <div>
+        @if (recipe.image) {
+          <img class="img" width="200px" height="200px" [src]="recipe.image" alt="fotos">
+        } @else {
+          <img class="img" width="200px" height="200px" src="/no-image-icon.png" alt="fotos">
+        }
+      </div>
+      <div>
+        <button mat-flat-button class="custom-button white-button edit-button" (click)="edit()">Editar</button>
+        <button mat-flat-button class="custom-button" (click)="delete(recipe.id)">Remover</button>
+      </div>
+    </div>
+    <h4>{{ recipe.name }}</h4>
+
+      <div>
+        <p><b>Ingredientes:</b></p>
+        @for (ingredient of recipe.ingredients; track ingredient.id) {
+          <p>• {{ ingredient?.amount }} {{ ingredient.unit?.type }} {{ ingredient.product.name }}</p>
+        }
+      </div>
+      <div>
+        <p><b>Modo de Preparo:</b></p>
+        <p class="preparation-mode">{{ recipe.preparationMode }}</p>
+      </div>
+      <div>
+        @if (recipe.hint) {
+          <p><b>Dicas para acompanhamento:</b></p>
+          <p>{{ recipe.hint }}</p>
+        }
+      </div>
+  </div>
 </mat-card>
-
-
-
-
-

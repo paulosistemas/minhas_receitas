@@ -1,14 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgOptimizedImage } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    RouterLink,
+    NgOptimizedImage,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconButton,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [LoginService],
   templateUrl: './login.component.html',
@@ -16,6 +28,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent {
   loginForm!: FormGroup;
+  hide = signal(true);
 
   constructor(
     private router: Router,
@@ -36,11 +49,8 @@ export class LoginComponent {
       })
   }
 
-  recoverPassword() {
-    this.router.navigate(['recuperar'])
-  }
-
-  register() {
-    this.router.navigate(['registrar'])
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 }

@@ -17,7 +17,6 @@ import {MatButton, MatIconButton} from "@angular/material/button";
 import {UserService} from "../../../services/user.service";
 import {ToastrService} from "ngx-toastr";
 import {MatDialogRef} from "@angular/material/dialog";
-import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-edit-password-dialog',
@@ -41,7 +40,6 @@ export class EditPasswordDialogComponent {
 
   private userService = inject(UserService);
   private toastrService = inject(ToastrService);
-  private loginService = inject(LoginService);
 
   userId = parseInt(<string>sessionStorage.getItem('user-id'));
 
@@ -71,7 +69,6 @@ export class EditPasswordDialogComponent {
       next: () => {
         this.toastrService.success("Senha alterada com sucesso!");
         this.dialogRef.close();
-        this.loginService.logout()
       },
       error: err => this.toastrService.error(err.error.message)
     });
