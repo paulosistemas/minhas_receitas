@@ -43,7 +43,7 @@ public class UserService {
     }
 
     private void validateUser(Integer id) {
-        if(getLoggedUser().getId().equals(id)){
+        if(!getLoggedUser().getId().equals(id)){
             throw new AccessDeniedException("Acesso negado.");
         }
     }
@@ -63,6 +63,7 @@ public class UserService {
         User oldUser = getOne(id);
         oldUser.setName(newUser.getName());
         oldUser.setEmail(newUser.getEmail());
+        oldUser.setImage(newUser.getImage());
         return userRepository.save(oldUser);
     }
 

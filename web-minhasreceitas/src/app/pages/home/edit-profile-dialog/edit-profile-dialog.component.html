@@ -1,0 +1,36 @@
+<div class="main-container">
+  <mat-toolbar>
+    <span>Editar Perfil</span>
+  </mat-toolbar>
+  <mat-divider></mat-divider>
+
+  <form class="profile-form" [formGroup]="editProfileForm">
+    <div class="profile-image">
+      <input type="file" class="file-input" accept=".png,.jpeg,.jpg" (change)="onImageSelected($event)" #fileUpload>
+      <div class="file-upload">
+        @if (editProfileForm.get('image')?.value) {
+          <img class="img" width="150px" height="150px" src="{{ editProfileForm.get('image')?.value }}" alt="fotos">
+        } @else {
+          <img class="img" width="150px" height="150px" src="/default-user-image.jpg" alt="fotos">
+        }
+        <button mat-mini-fab class="upload-btn" (click)="fileUpload.click()">
+          <mat-icon aria-hidden="false" fontIcon="photo_camera"></mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="main-fields">
+      <mat-form-field class="form-field-width" appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input id="name" formControlName="name" matInput required [type]="'text'"/>
+      </mat-form-field>
+      <mat-form-field class="form-field-width" appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input id="email" formControlName="email" matInput required [type]="'text'"/>
+      </mat-form-field>
+    </div>
+    <div class="buttons">
+      <button mat-flat-button class="custom-button white-button cancel-button" (click)="cancel()">Cancelar</button>
+      <button mat-flat-button class="custom-button" (click)="submit()" [disabled]="editProfileForm.invalid">Salvar</button>
+    </div>
+  </form>
+</div>

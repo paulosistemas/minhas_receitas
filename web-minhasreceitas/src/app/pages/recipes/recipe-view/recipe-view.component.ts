@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RecipeResponse } from '../../../types/recipe.type';
 import { MatCardModule } from '@angular/material/card';
 import {
@@ -11,6 +11,7 @@ import {
 } from '@angular/material/table';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatToolbar } from '@angular/material/toolbar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-view',
@@ -35,8 +36,17 @@ import { MatToolbar } from '@angular/material/toolbar';
 export class RecipeViewComponent implements OnInit {
 
   recipe!: RecipeResponse
+  private router = inject(Router)
 
   ngOnInit(): void {
     this.recipe = history.state
+  }
+
+  edit() {
+    this.router.navigate([`${this.router.url}/editar`])
+  }
+
+  delete(id: number) {
+
   }
 }

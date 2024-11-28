@@ -41,10 +41,6 @@ export const APP_ROUTES: Routes = [
         loadComponent: () => import('./pages/recipes/recipe-form/recipe-form.component').then(c => c.RecipeFormComponent)
       },
       {
-        path: 'editar',
-        loadComponent: () => import('./pages/recipes/recipe-form/recipe-form.component').then(c => c.RecipeFormComponent)
-      },
-      {
         path: ':category',
         loadChildren: () => import('./pages/recipes/recipes.routes').then(r => r.RECIPE_ROUTES),
         canActivate: [authGuard, categoryGuard],

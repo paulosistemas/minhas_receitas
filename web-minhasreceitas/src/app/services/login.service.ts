@@ -19,6 +19,7 @@ export class LoginService {
       .pipe(tap((source) => {
         sessionStorage.setItem('username', source.name)
         sessionStorage.setItem('auth-token', source.token)
+        sessionStorage.setItem('user-id', source.id)
       }))
   }
 
@@ -33,6 +34,7 @@ export class LoginService {
   logout(redirectTo = '/login'): void {
     sessionStorage.removeItem('username')
     sessionStorage.removeItem('auth-token')
+    sessionStorage.removeItem('user-id')
     this.router.navigate([redirectTo]).then();
   }
 }

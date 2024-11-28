@@ -19,3 +19,9 @@ export class ProductUrl {
   static UPDATE = ProductUrl.PRODUCT_URL + '/update/'
   static DELETE = ProductUrl.PRODUCT_URL + '/'
 }
+
+export class UserUrl {
+  static USER_URL = 'users/'
+  static CHANGE_PASSWORD = UserUrl.USER_URL + 'change-password'
+  static EDIT = UserUrl.USER_URL + 'edit/'
+}

@@ -31,7 +31,7 @@ public class AuthenticationController {
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             var auth = authenticationManager.authenticate(usernamePassword);
             var token = tokenService.generateToken((User) auth.getPrincipal());
-            return ResponseEntity.ok(new LoginResponseDTO(((User) auth.getPrincipal()).getName(), token));
+            return ResponseEntity.ok(new LoginResponseDTO(((User) auth.getPrincipal()).getName(), token, ((User) auth.getPrincipal()).getId()));
         } catch (Exception e) {
             throw new InvalidCredentialsException("Senha ou email inválidos");
         }

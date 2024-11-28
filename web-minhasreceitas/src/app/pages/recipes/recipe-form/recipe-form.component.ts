@@ -13,6 +13,7 @@ import { ProductService } from '../../../services/product.service';
 import { ProductType } from '../../../types/product-type';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ProductsComponent } from '../../products/products.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-form',
@@ -61,6 +62,8 @@ export class RecipeFormComponent implements OnInit {
   private productService = inject(ProductService);
   private recipeService = inject(RecipeService);
   private toastrService = inject(ToastrService);
+  private route = inject(ActivatedRoute);
+  recipeId: number | null = null;
 
   constructor() {
     this.recipeForm = new FormGroup({
@@ -89,6 +92,8 @@ export class RecipeFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.recipeId = this.route.snapshot.params['id'];
+    console.log('recipeId', this.recipeId);
     this.getAll();
   }
 

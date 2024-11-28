@@ -13,7 +13,7 @@ CREATE TABLE user_account(
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
     role SMALLINT NOT NULL,
-    image VARCHAR(1000)
+    image TEXT
 );
 
 CREATE TABLE category(

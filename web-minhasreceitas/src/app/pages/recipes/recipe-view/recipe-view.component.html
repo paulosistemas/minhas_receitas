@@ -3,8 +3,8 @@
     <img [src]="recipe.image" alt="" height="150px" width="150px">
   </figure>
   <p>{{ recipe.name }}</p>
-  <button>Editar</button>
-  <button>Remover</button>
+  <button (click)="edit()">Editar</button>
+  <button (click)="delete(recipe.id)">Remover</button>
   <mat-card-content>
     <p>Ingredientes:</p>
     @for (ingredient of recipe.ingredients; track ingredient.id) {

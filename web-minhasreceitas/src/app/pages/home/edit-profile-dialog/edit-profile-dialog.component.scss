@@ -1,0 +1,65 @@
+.main-container {
+  padding: 26px;
+}
+
+.main-fields {
+  padding-top: 26px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.form-field-width {
+  min-width: 300px;
+}
+
+.profile-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 12px;
+}
+
+.file-upload {
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+
+
+  .img {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .upload-btn {
+    background-color: #292929 !important;
+    color: white !important;
+    border: none;
+    border-radius: 50%;
+
+    position: absolute;
+    bottom: 195px;
+    right: 266px;
+    z-index: 10;
+
+    &:hover {
+      background-color: black !important;
+    }
+  }
+}
+
+.file-input {
+  display: none;
+}
+
+.buttons {
+  padding-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cancel-button {
+  margin-right: 15px;
+}
